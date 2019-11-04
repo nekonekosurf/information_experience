@@ -28,3 +28,258 @@ leasures, or else he endures pains to avoid worse pains."Section 1.10.33 of "de 
 
 1914 translation by H. Rackham
 "On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater p
+1. Introduction
+Understanding the three-dimensional (3D) structure of biological tissue is crucial for gaining structural insights in physiology and pathology. Histological section images have a much higher resolution and contrast compared with MR and CT images. Additionally, a specific biological structure is emphasized using staining in a histological image. Therefore, a 3D model constructed from section images provides more detailed structural information for the analysis of shape and volume.
+
+Fig. 1 shows each process of 3D reconstruction from histological section images. First, we conduct sectioning from biological samples. Second, we conduct the fixation of sectioned samples to a glass slide. Third, we stain the samples to emphasize a specific biological structure. Forth, we acquire images using light microscopy. However, each aforementioned process has distortions of sections that make 3D reconstruction difficult [1]. The sectioning process causes the destruction of tissue, such as stretching, bending, and tearing. The fixation process causes tissue destruction, such as folding. The staining process generates staining variations among samples. Image acquisition causes rotation, translation (shifting), and variation in illumination. Because of these deformations, 3D reconstruction by only stacking the section images generates discontinuous tissue (Fig. 1(5)). Therefore, we align these images using image registration and acquire a smooth 3D model, as shown in Fig. 1(6). The image registration process aligns a source image into a target image. Image registration is essential for the reconstruction of a smooth 3D model from section images.
+
+Fig. 1
+Download : Download high-res image (134KB)Download : Download full-size image
+Fig. 1. Each process of 3D reconstruction from serial sections: (1) sectioning the samples into thin sections; (2) fixing the sections to a slide glass; (3) staining the sections; (4) imaging the sections using microscopy; (5) stacking the images to generate a non-smooth result because of the distortions during processes (1) to (4); (6) aligning the images using registration to generate a smooth 3D reconstruction result. The result of the proposed method is shown.
+
+Among the serial section images, we focus on the Kyoto collection, which has a large number of human embryo serial section images [2]. The 3D reconstruction from section images in the Kyoto collection provides detailed structural information at various developmental phases. However, this dataset has several difficulties for 3D reconstruction. First, the number of sections is large. For example, a small sample has more than 100 section images and a large sample has more than 1000 section images. Therefore, the accumulation of registration errors cannot be ignored, as discussed later. Second, the histological image dataset has no corresponding CT/MRI image. Therefore, we need to reconstruct a 3D model from two-dimensional (2D) serial section images without an external reference. The goal of this study is to reconstruct a 3D model from a large number of serial sections, such as the Kyoto collection, without an external reference.
+
+There are two main problems in the registration of serial section images: (1) non-rigid deformation occurs during the sectioning process; and (2) problems in the registration of a large number of sections, consist of tissue discontinuity caused by registration failure and an accumulation of scale change in sequential registration.
+
+First, section images have non-rigid deformation (Fig. 2, first row). This is because of distortion during the sectioning process, as discussed previously. Therefore, non-rigid registration is required to align the deformed sections (Fig. 2, second row).
+
+Fig. 2
+Download : Download high-res image (160KB)Download : Download full-size image
+Fig. 2. Non-rigid deformation and registration of section images: source (red) and target (blue) image before registration (first row) and after registration (second row). (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+
+In addition to non-rigid deformation, there are two other problems in 3D reconstruction from a large number of serial section images: (1) tissue discontinuity caused by registration failure; and (2) accumulation of scale change in sequential registration. The first problem is tissue discontinuity caused by registration failure. For 3D reconstruction, we conduct multiple registrations by shifting the source-target image pairs sequentially. However, during multiple registrations, registration failure is caused by a staining variation or a destruction of tissue. Then, target image with registration failure causes tissue discontinuity (Fig. 3(a)).
+
+The second problem is the accumulation of scale changes. By conducting multiple non-rigid registrations, a change of scaling accumulates (Fig. 4(1)–(2)). This accumulation of scaling cannot be ignored for 3D reconstruction from a large number of serial sections, such as the Kyoto collection.
+
+This study makes three contributions regarding non-rigid registration. First, the proposed method efficiently represents non-rigid deformation using a small number of control points by blending of rigid transforms, which can be estimated robustly against staining variation. Second, our method can select proper number of control points automatically. The proper number depends on the deformation between the image pair, so it is significant for the 3D reconstruction. Third, we propose the novel method to solve two main problems in the registration of a serial section images: tissue discontinuity and scale changes.
+
+This article is an extension of the work presented in ACPR2017 [3]. The previous work proposed a non-rigid registration method for a pair of histological images. This study extends the previous method for the 3D reconstruction from the sequence of histological images. The proposed method has additional processes of registration target selection and scale adjustment. We qualitatively present that they improve the quality of the 3D reconstruction significantly. This article is organized as follows: We discuss related work on registration for image pairs and serial sections for 3D reconstruction in Section 2. We explain our registration method in Section 3. We provide the details of the proposed non-rigid registration method in Section 3. Then, we explain the registration of serial sections for 3D reconstruction, which consists of how to select the target image and scale adjustment in Section 4. Next, we present the experimental results of the proposed method in Section 5. First, we present the registration results of section image pairs and their quantification analysis. Then, we present the results of 3D reconstruction from serial sections and its quantification analysis. We conclude the paper with a summary, limitations, and future study in Section 6.
+
+2. Related work
+2.1. Registration of image pairs
+For the registration of section images, manual registration with user interaction has been proposed [4], [5]. However, the manual method lacks accuracy and generates a non-reproducible result. Additionally, the manual method is time-consuming and cannot be used for a large number of sections, such as the Kyoto collection. Therefore, various registration algorithms have been proposed.
+
+One type of non-rigid registration uses free-form deformation (FFD), which is an area-based approach [6], [7], [8]. Several registration methods for histological images [9], [10] are based on FFD with B-spline interpolation. FFD estimates the displacement at control points and calculates the displacement at every point using interpolation, as shown in Fig. 5(b).
+
+Fig. 3
+Download : Download high-res image (195KB)Download : Download full-size image
+Fig. 3. Discontinuous tissue caused by an accumulation of registration errors: (a) discontinuous tissue caused by neighbor pair image registration; (b) continuous tissue using our target selection method.
+
+Fig. 4
+Download : Download high-res image (144KB)Download : Download full-size image
+Fig. 4. Scale change caused by registration: (1) registration to a pair of images in the bottom section causes scale change; (2) change of structure in the output 3D result caused by an accumulation of scale changes caused by sequential registration; (3) preservation of scale using our scale adjustment; (4) preservation of the original 3D structure using our scale adjustment.
+
+Fig. 5
+Download : Download high-res image (259KB)Download : Download full-size image
+Fig. 5. Representation of deformation: (a) displacement field of FFD: each control point has displacement (first row) and by interpolation, a displacement field (second row) is generated (the arrow indicates the displacement); (b) transformation field of the proposed method: each control point has a rigid transform (first row) and by blending the transforms, a transformation field (second row) is generated (the arrow indicates the displacement and the color of the arrow indicates the rotational degree shown in (c)); (c) color bar of the rotational degree. We used the source and target image pair in Fig. 2 (first row) for the visualization. (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+
+However, the descriptive power of the deformation highly depends on the resolution of the grid of control points [11]. A large number of control points are required to represent complex non-rigid deformation.
+
+The feature-based approach is also popular for the global registration technique, such as the rigid or affine transform of the entire image. The feature-based approach uses invariant local image features for robust matching. This approach has been studied frequently in the image processing field [12], [13] and other fields [14], [15], [16]. Several feature descriptors, such as SIFT, SURF, and ORB [17], [18], [19], [20], have been proposed to be invariant to rotation, translation, and brightness variance, which occur in histological section images. Although using the local image feature is one of the standard approaches to performing global rigid and affine registration, there is still no standard approach for non-rigid registration. For example, it is not directly applied to FFD because it does not provide control points on a regular grid.
+
+Another approach is pixel-based registration [21], [22], [23]. This type of approach uses pixel value directly with a certain similarity measure [24], [25], [26]. However, it is not robust to variation in pixel intensity.
+
+2.2. Registration of serial sections for 3D reconstruction
+For reconstructing a 3D model from serial sections, a straightforward approach is to conduct neighboring pairwise registration [10]. The registration is applied to neighboring image pairs sequentially according to the following:
+(1)
+where Ix and  are the xth image before and after registration respectively, Ir is the reference image (), N is the number of section images, and R(S, T) is the registration function that transforms source image S into target image T. However, registration failure in one section causes tissue discontinuity in this method (Fig. 3(a)) because once registration fails, we lose continuous tissue sections in neighbor pairwise registration.
+
+Several methods have been proposed to solve tissue discontinuity and scale change problems. The first type of method uses external 3D reference information. This type of method uses a 3D structure in CT, MRI, or PET as a reference for the registration of serial section images [27], [28]. Other methods [29], [30] use 2D block-face surface images of uncut sample tissue as external references. 2D block-face refers to images of the sample before each slice is sectioned. 2D block-face images can be used as a ground truth 3D reference for registration. However, not all section data have corresponding CT, MRI, PET, or 2D block-face images. Once sectioning is conducted from samples, these 3D reference data cannot be obtained from them. Therefore, a method without other references has been proposed as below.
+
+Another approach uses prior knowledge of a specific biological structure. Xu et al. automatically detected the biological structure, such as nuclei, and used it as a correspondence landmark between image pairs [31]. Others have used the assumption that the original 3D sample has a smooth biological structure. Cifor et al. calculated the displacement field using the curvature of the boundaries of the extracted structure [32]. However, these methods rely on a specific structure of the section image and cannot be used on every domain of histological section images.
+
+Another approach selects an appropriate target image to reduce the effect of registration failure. Wang et al. proposed a validation model to determine whether the output registration image is valid [10]. They used the geometrical distances that result from the B-spline deformation field and set a threshold to accept the registration However, they could not solve the discontinuous tissue problem because they used the neighboring pairwise registration method. Therefore, once the deformation is too large, the output is the original source image using their validation method, and continuous tissue is lost. Yushkevic proposed a method to select a source and target pair using mutual information and a graph algorithm for excluding bad slices [33].
+
+3. Registration of image pairs
+First, as a minimum problem, we consider the registration of two image pairs. In this section, we propose a novel non-rigid registration method for section images.
+
+In section images, deformation is globally non-rigid; however, several studies [34], [35] have been based on the observation that they can be considered to be locally rigid. We also consider this assumption and represent global non-rigid deformation from local rigid transforms. Therefore, we propose a non-rigid registration by blending the local rigid transforms. Our method estimates the rigid transform at every pixel from local rigid transforms (Fig. 5(c)).
+
+Several methods can be used to estimate a transform at each pixel from the local rigid transforms at the control points. One is the direct average method [36], which is also known as linear blend skinning (LBS) in the computer graphics field. LBS represents rigid transform Mi in matrix form, takes the weighted sum for each element, and normalizes the resultant matrix so that it represents a rigid transform. LBS is simple and computationally efficient; however, it has some artifacts. To reduce the artifacts of LBS, blending using dual quaternion has been proposed in the 3D computer graphics field [37].
+
+The other method is the polyrigid transform model [34], [35]. Arsigny et al. used ordinary differential equations to integrate the velocity vector at each control point to obtain the transforms. This method has some mathematically good attributes, such as the invertibility of the resultant transforms. However, these studies did not provide quantitative results that demonstrate the effectiveness of a real-world problem, for example, the registration of histological section images and artifacts of the method are not known. The deformation that occurred in the histological section images would not be limited to invertible transforms. Therefore, in the present study, we use the direct average method with the improvement of reducing the artifacts of blending in 2D images.
+
+Our method can be considered to extend the FFD approach in two main aspects. First, the control points are defined not on a grid, but several local regions according to the pattern on the image. Second, each control point has a rigid transform (translation and rotation) where a control point of FFD has a displacement (translation). We call these transforms at every pixel a transformation field (Fig. 5(c)). Because each point has an individual rigid transform, the transformation field can describe non-rigid deformation for the entire image. For example, if an image has a deformation that occurs in a section image, as shown in Fig. 5(a), it forms a complex displacement field. FFD represents the deformation using control points defined on a grid that has a displacement (translation), as shown in Fig. 5(b). The estimated transform becomes coarse without using a high-resolution grid of control points. Thus, in FFD, dense control points are required to represent the complex deformation. By contrast, the control points of our method have a rigid transform (translation and rotation), as shown in Fig. 5(c). Since a rigid transform has richer description than a displacement, the proposed method can describe complex non-rigid deformation using a smaller number of control points than FFD.
+
+In this section, first, we explain feature-based rigid registration and then we explain our proposed non-rigid registration by blending transforms. For our non-rigid registration method, first, we explain our method for a constant number of local regions and then we extend it to any number of local regions.
+
+3.1. Feature-based rigid registration
+First, feature keypoints are extracted in existing feature-based rigid registration. Then, keypoint matching is performed, and using the matching, we calculate the global rigid transform.
+
+3.1.1. Keypoint detection and feature matching
+Although any method can be used for keypoint detection and feature description such as SIFT and ORB, we adopt accelerated-KAZE (AKAZE) [38] as the state-of-the-art method. By applying the method for the source and target images, two sets of keypoints are acquired. Between them, feature matching is performed by brute-force matching using the Hamming distance.
+
+To prune improper matching in the background region, the method also extracts the tissue region and removes matches outside the region. The tissue region is extracted as follows: First, we convert the original image into a grayscale image using the UV component in YUV color space. Next, the grayscale image is converted to a binary image using the threshold calculated by Otsu’s method [39]. Then, we locate the contour of the binary image. Finally, the outside of the contour is masked.
+
+3.1.2. Estimating rigid transforms
+Using the keypoints, we estimate a rigid transform that transforms the source image into the target image. 3 times3 matrix M of rigid transform is estimated using the random sample consensus (RANSAC) algorithm [40] in the same manner as existing methods.
+
+Then, rigid registration can be performed by applying the transform to the source image. The pixel value of the registered output image Is′(x, y) can be obtained from pixel value Is(x, y) in the source image using the following:
+(2)
+where  denotes the homogeneous coordinates. For the interpolation of the remapping, linear interpolation is applied.
+
+3.2. Feature-based non-rigid registration by blending transforms
+Next, we explain our proposed non-rigid registration method. The proposed method estimates rigid transforms at every pixel using local rigid transforms and blending them. Our non-rigid registration method consists of four steps, as shown in Fig. 6. First, we extract the feature points for the images and calculate the matching of these points. This step is the same as the step in rigid registration explained in Section 3.1.1. Next, we define local regions, each of which has rigid deformation. Then, we estimate a rigid transform in each local region. Finally, we compute a transformation field. The following sections explain these steps in detail. We explain our method for a constant number of local regions.
+
+Fig. 6
+Download : Download high-res image (680KB)Download : Download full-size image
+Fig. 6. Overview of the proposed non-rigid registration of a pair image: Using source and target images as input, the method (1) extracts feature keypoints and matches them; (2) conducts clustering of the matching (the case for  is shown); and (3) estimates the rigid transform Mi in each cluster. The transformation field is computed by (4) blending the transforms M with weights w to represent non-rigid deformation. The transformation field is visualized as a displacement (arrow) and rotational degree (color). For details of the visualization, see Fig. 9. (For interpretation of the references to color in this figure legend, the reader is referred to the web version of this article.)
+
+3.2.1. Keypoint clustering and estimating local transforms
+As discussed above, even if the deformation is globally non-rigid, there is a rigid transform in each local region. Such a local transform can be estimated from the keypoints in a neighborhood. Thus, we perform K-means clustering for the keypoint matches on the source image using their coordinates to determine each local region, as shown in Fig. 6(2). We explain a method for determining cluster number K in Section 3.3. Using the keypoints in each cluster i, we estimate a rigid transform Mi, which transforms a local region in the source image to the target image, as shown in Fig. 6(3). The rigid transformation matrix Mi is estimated as explained in Section 3.1.2 for each local region i. Then, we define a control point vi as the center of the keypoints used to estimate Mi in the source image.
+
+3.2.2. Calculating the transformation field by blending the transforms
+The proposed method estimates a transformation field that has a rigid transform at each pixel by blending rigid transforms  (Fig. 6(4)). Blending rigid transforms has been studied in the computer graphics field, and LBS is the most simple method. However, several artifacts occur, such as the candy wrapper effect in LBS. For the blending of 3D transforms, dual quaternion linear blending (DLB) and dual quaternion iterative blending (DIB) have been proposed to overcome the artifact [37]. DIB requires an iterative process because it is not defined in a closed form, but is mathematically ideal. For the 2D case, the anti-commutative dual complex has been proposed [41]. We can represent rigid transforms using the dual complex number as follows:
+(3)
+where c0 and cε are complex numbers and ε is a dual number . Although the linear blending algorithm has also been proposed [41], we extend it to the 2D case as dual complex iterative blending (DCIB) because DIB is mathematically preferable. We calculate DCIB as follows:
+
+For applying DCIB, we convert rigid transform matrices  into dual complex numbers  as in [41]. We calculate the rigid transform in dual complex number  at pixel p using iterative blending as follows:
+(4)
+(5)
+where  is a function of blending the transforms using DCIB as shown in Algorithm 1 and wi(p) is the blending weight of the local region i at pixel p.
+
+Algorithm 1
+Download : Download high-res image (99KB)Download : Download full-size image
+Algorithm 1. DCIB: Iterative blending algorithm for anti-commutative dual complex.
+
+For each local region i, we empirically set weight wi at pixel p according to the Euclidean distance from p to transformed control point  as follows:
+(6)
+(7)
+(8)
+Because the weights need to be convex (), we normalize them to meet the conditions to guarantee the convergence of DCIB. Then, we convert dual complex number  to transformation matrix M′(p) as in [41].
+
+Finally, we calculate the pixel value of output image Is′(x, y) from pixel value Is(x, y) in the source image using the following:
+(9)
+where  denotes the homogeneous coordinates. For the interpolation of the remapping, we apply linear interpolation.
+
+Each pixel has a different rigid transform because each pixel has an individual weight. Thus, the transformation field represents non-rigid deformation in the entire image, as shown in Fig. 6(4).
+
+3.3. Extension to any number of local regions
+The optimal number of local regions depends on the magnitude and complexity of the deformation in a tissue. Registration is executed for a number of image pairs for 3D reconstruction, and each of them has different deformation. Since the optimal number is also different depending on the image pair, it is inappropriate to set the same number of local region for every image pair. Therefore, we propose a method to determine the number of local regions automatically by our criterion. This criterion is based on our novel non-rigid registration method.
+
+To determine the number of local regions K, we use the error of the transformed keypoint as a criterion. For given number of clusters k, a transformation field is computed using the proposed method, then we evaluate it using error ek according to the Euclidean distance from transformed keypoints in the source image and its correspondence in the target image as follows:
+(10)
+where pt is a keypoint in the target image that corresponds to ps, which is a keypoint in the source image. We compute transform M′(ps) at ps as explained in Section 3.2.2.
+
+We only evaluate the top 80% of keypoint matches that have a small error to reduce the effect of mismatched keypoints. For each image pair, we firstly set k as 1, then increase k while error ek decreases. We adopt k as appropriate number of clusters K for the image pair.
+
+4. Registration of serial sections for 3D reconstruction
+We propose the non-rigid registration of two image pairs in Section 3. In this section, we explain the registration method of entire serial sections that solves tissue discontinuity and scale change problems for 3D reconstruction.
+
+For a tissue discontinuous problem, we propose a target selection method that uses registration accuracy based on our non-rigid registration method. Our method avoids tissue discontinuity by selecting the target image without registration failure, as shown in Fig. 3(b). For the scale change problem, we propose a scale adjustment method to preserve the tissue area after non-rigid registration (Fig. 4). We use the tissue area before and after registration to adjust the scale.
+
+Fig. 7 shows the overview of our serial section registration method for 3D reconstruction. We conduct sequential registration from reference image Ir backwardly and forwardly. For each pair of sequential registrations, we (1) select a target image; (2) apply non-rigid registration; and (3) conduct scale adjustment. Our method enables smooth 3D reconstruction from a large number of serial sections.
+
+Fig. 7
+Download : Download high-res image (189KB)Download : Download full-size image
+Fig. 7. Overview of the proposed serial section registration method for 3D reconstruction. We conduct registration from reference image Ir to I1 (backward registration) or IN (forward registration). In each registration, (1) we select the target image from target candidates for each source image. (2) Then, we conduct non-rigid registration. (3) Finally, we apply scale adjustment.
+
+Fig. 8
+Download : Download high-res image (425KB)Download : Download full-size image
+Fig. 8. Registration of histological section images: (a) source image; (b) target image; (c) rigid registration; (d) non-rigid registration using bUnwarpJ (deformation grid = 8 × 8); (e) proposed non-rigid registration (cluster number ). We show the images with large deformation (first and second rows) and high staining variation (third and fourth rows). The first and third rows show the registration images. The second and fourth rows show the target image in blue and each registration results in red. (For interpretation of the references to color in this figure legend, the reader is referred to the web version of this article.)
+
+Fig. 9
+Download : Download high-res image (484KB)Download : Download full-size image
+Fig. 9. Visualization of the transformation field in each number of clusters: (a) transformation field of each number of clusters, where (n) indicates the number of clusters; (b) color bar of the rotational degree. We used the source and target image pair in Fig. 8 (first row) for the visualization. The arrow indicates the displacement. The color of the arrow indicates the rotational degree. (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+
+4.1. Selecting the target image
+Unlike the registration of neighboring image pairs in Eq. (1), we select image pairs and conduct registration sequentially according to
+(11)
+where Ix is the xth image before registration,  is the xth image after registration, Ir is the reference image (), N is the number of section images, R(S, T) is the registration function stated in Section 3to transform source image S into target image T,  is the function to select the target image from candidate images (), and ws is the window size that determines the candidate images.
+
+For the selection, we adopt the criterion used to determine the number of local clusters explained in Section 3.3. For each target candidate, we obtain the error of transformed keypoints ek in Eq. (10) for each source image. We select the target image with minimum ek as the final target image for the source image.
+
+4.2. Scale adjustment
+To reduce the accumulation of scale change caused by registration, we propose a method to adjust scaling. We conduct a scale adjustment by calculating the change in area after registration and applying the transform to compensate for the change according to
+(12)
+(13)
+(14)
+where Is′(x, y) is the pixel value of the image after non-rigid registration, as in Eq. (9), Is″(x, y) is the pixel value of the final output image after scale adjustment, A and A′ are tissue area before and after registration respectively, sx and sy are the scale factor to the x-axis and y-axis respectively, (cx, cy) is the center of the extracted tissue as the center of the transform, and S is the transformation matrix used to adjust scaling.
+
+5. Results and discussions
+First, we evaluate our non-rigid registration method using the performance of the registration of two image pairs. Then, we evaluate the performance of our three proposed methods, which are non-rigid registration method, target selection method, and scale adjustment, for 3D reconstruction from a large number of serial sections. To achieve this, we used a part of image dataset of the Kyoto collection [2]. This study was approved by the Ethics Committee of the Graduate School of Medicine and Faculty of Medicine, Kyoto University (approval numbers R0316 and R0347). The parameters used in the experiment are as follows: We used AKAZE in OpenCV [42] with the default parameters, except threshold = 0.0005 for keypoint detection explained in Section 3.1.1. We empirically set window size  in Eq. (11) to select a target image.
+
+5.1. Registration of image pairs
+We experimentally demonstrated that the proposed method is applicable to the non-rigid registration of a histological section image. We selected four specimens from the Kyoto collection and randomly selected 20 pairs of two neighboring images from each of them.
+
+We compared our method with one of the existing non-rigid registration methods: bUnwarpJ (elastic registration using B-spline) [9]. bUnwarpJ was used for the non-rigid registration of a state-of-the-art 3D reconstruction method [10]. Fig. 8 shows the source image (Fig. 8(a)), target image (Fig. 8(b)), and results of registration (Fig. 8(c)–(e)). Because the histological sections were stained chemically, a variation in staining could occur. We show the results of samples with large deformations in the first row and high variations of staining in the third row. The second and fourth rows show the overlay of the registration result and target image. The number of control points for bUnwarpJ was set to 8 × 8 and the cluster number (K) was 8 for the proposed method. Even though the number of control points used in our method was much fewer than those in bUnwarpJ, the proposed method achieved better performance for samples with high staining variation where bUnwarpJ had a large deformation error, as shown in the bottom row of Fig. 8.
+
+Then, we visualized the transformation field of our method for various cluster number,  in Fig. 9. The figure shows the displacement as an arrow and the rotational degree as a color. This demonstrates that our method can represent a complex deformation from a small number of control points ( in this case).
+
+Next, we conducted a quantitative evaluation of registration accuracy using intersection over union (IOU) (also known as the Jaccard index (JI)) [43]. IOU represents the overlap ratio of tissue regions, which was extracted using the method described in Section 3.1.1 from two adjacent images as follows:
+(15)
+where A and B are the same pixels in the source and target images. The accuracy of various settings is presented in Fig. 10. bUnwarpJ required many control points (8 × 8) to achieve good accuracy. By contrast, the proposed method achieved almost the same accuracy with a much smaller number of control points, and performance was relatively stable for the number of control points.
+
+Fig. 10
+Download : Download high-res image (185KB)Download : Download full-size image
+Fig. 10. The accuracy of registration using IOU. IOU of the registration images in each method: rigid registration (Rigid), bUnwarpJ, and our method (Ours) for various settings. In bUnwarpJ, (n × n) represents the number of deformation grids. In our method, (n) represents the number of control points, (auto) represents the method for determining the number of clusters K using keypoints, and red dots represent the mean. (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+
+We also tested the effectiveness of our method for determining the cluster number. We evaluated the IOU of the cluster number selection method, as shown in Fig. 10 (auto). We observe that it achieved the best performance among the other methods.
+
+Fig. 11 shows the direct comparison of bUnwarpJ and our method using the same number of control points or condition with the best average IOU in Fig. 10. For the same number of control points, we compare between bUnwarpJ with  deformation grid intervals and our method with four control points. For the condition of best average IOU, we compare between bUnwarpJ with  deformation grid intervals and our method automatic cluster determination. Each point represents the IOU of bUnwaprJ and our method for the same pair of sections. If the accuracy is same, then the point is plotted on the diagonal line. The points in the upper left-hand side indicate that the proposed method achieved a better IOU than bUnwarpJ. We observe that our method achieved similar or much better accuracy than bUnwarpJ for most samples.
+
+Fig. 11
+Download : Download high-res image (153KB)Download : Download full-size image
+Fig. 11. Accuracy comparison of bUnwarpJ and our method with the same number of control points or best control number for the same image pair. The x-axis and y-axis respectively show that the IOU of bUnwarpJ and our method. The comparison has made between  deformation grid intervals for bUnwarpJ and four control points for our method, which is indicated as (4) in the figure, and between  deformation grid intervals for bUnwarpJ and automatic cluster determination in our method, which achieved the best performance (best).
+
+For further evaluation of the cluster number selection method, we compared the criterion of Eq. (10) by comparing with a benchmark method using the IOU to evaluate the number of clusters. We evaluated the IOU for local cluster number  in a brute-force manner, and selected K that achieves the best IOU for each image pair. Note that the benchmark method always achieves better accuracy in terms of IOU than the automatic selection method where the selected cluster number is less than 16.
+
+Fig. 12 shows the histogram of the cluster number of our method and the method using IOU. Our method selected a smaller number of control points than that of the best IOU. To compare the performance of our proposed method with the benchmark method, we used two criteria: the IOU of the entire tissue and IOU of the manually annotated region of the central nervous system. This annotation was performed by a medical expert. Because the benchmark method maximized the IOU of the entire tissue using the brute-force approach, it had to be the best result under the first criterion. The second criterion using the IOU of an annotated image was blind for both methods; thus, it provided a fair and solid comparison. As a result, the proposed method using keypoints was comparable with the benchmark method using IOU in both the entire and annotated regions (Fig. 13). Note that the proposed method using keypoints had much less computational cost than the benchmark method using the IOU because these methods required the blending of transforms only at keypoints and at all pixels, respectively. These results support the fact that the proposed method using keypoints was efficient and sufficiently appropriate to tune the number of clusters.
+
+Fig. 12
+Download : Download high-res image (151KB)Download : Download full-size image
+Fig. 12. Histogram of the selected cluster number for the proposed method using keypoints (KPs) and the benchmark method using IOU (IOU).
+
+Fig. 13
+Download : Download high-res image (110KB)Download : Download full-size image
+Fig. 13. Accuracy comparison of the cluster number selection method using the keypoints and IOU for the same image pair. The x-axis shows the IOU of the benchmark data using the IOU of the entire tissue in each sample. The y-axis shows the IOU of the proposed method that determined the cluster number. The IOUs for the entire tissue (whole) and annotated tissue (annotated) are shown.
+
+5.2. Registration of serial section images
+Next, we examine the 3D reconstruction result from serial section images and evaluate the effectiveness of our target selection method and scale adjustment. Fig. 14 shows the cross sections of the 3D reconstruction results with or without selecting the target image and scale adjustment. First, we examine the effectiveness of our target selection method. In existing neighboring pair registration methods (Eq. (1)), a reconstructed tissue is discontinuous (Fig. 14 (first and second column)). By contrast, using the proposed target selection method, the reconstructed tissue is continuous and smooth (Fig. 14 (third and fourth column)). We also quantified the result by the IOU of each neighboring pair of serial sections (Fig. 15). As a result, the average IOU of selecting the target image was higher than the neighboring pair registration. The registration result might depend of the window size. We empirically set it as  in this experiment. The proper number of window size depends on 1) the thickness of the slice that determines the difference in tissue structure and 2) the probability of damaged tissue. Smaller window size cannot avoid the tissue discontinuity caused by registration failure due to a large staining variation or a destructive deformation in a slice. By taking enough window size, our method can select proper target image which avoids the tissue discontinuity. These results demonstrate that our target selection method reduced the tissue discontinuity caused by registration failure.
+
+Fig. 14
+Download : Download high-res image (910KB)Download : Download full-size image
+Fig. 14. The side section of the 3D reconstruction result: two side views from the 3D reconstructed result by two different sectioning planes are displayed in each row. We show a result of our non-rigid registration method with (+) or without (−) each of two conditions: selecting the target image (Target) and scale (Scale) adjustment.
+
+Fig. 15
+Download : Download high-res image (117KB)Download : Download full-size image
+Fig. 15. The accuracy of registration using IOU: IOU of the registration images in each method, rigid registration (Rigid), and our non-rigid method (Non-rigid) in various settings. For rigid registration, our method () is shown. We show with (+) or without (−) two conditions: selecting the target image (Target) and scale adjustment (Scale).
+
+We also examined the effectiveness of our scale adjustment. Without the scale adjustment, the area of tissue was changed by the accumulation of the scale change (Fig. 16(c)). By contrast, using our scale adjustment, the area of tissue was retained (Fig. 16(d)). We also evaluated the effect of scale adjustment on the 3D reconstructed results. Without scale adjustment, the tissue area increased, as shown in Fig. 14 (bottom part of the third column). By contrast, the tissue area was retained with our scale adjustment, as shown in Fig. 14 (bottom part of the fourth column). We quantified the result by the IOU of each neighboring pair of serial sections (Fig. 15). As a result, the average IOU of the scale adjustment was lower than that for the method without scale adjustment because, by adjusting the scale, the area of overlap tissue became smaller. Note that IOU could not become 1.0 because the areas of the original source and target image were not same. Additionally, we quantified the tissue area before and after registration. Fig. 17 shows that the ratio of the tissue area increased after registration by the distance from the reference image. Without scale adjustment, the tissue area increased by increasing the distance from the reference image (Fig. 17(a)). By contrast, with our scale adjustment, the tissue area was retained by increasing the section number from the reference image (Fig. 17(b)). These results demonstrate that our scale adjustment reduced the accumulation of scale change.
+
+Fig. 16
+Download : Download high-res image (112KB)Download : Download full-size image
+Fig. 16. The change in tissue area caused by non-rigid registration. The 88th image from the reference image is shown: (a) original image; (b) rigid registration; (c) non-rigid registration; (d) non-rigid registration with scale adjustment.
+
+Fig. 17
+Download : Download high-res image (222KB)Download : Download full-size image
+Fig. 17. Effect of a scale adjustment to the tissue area: (a) without scale adjustment; and (b) with scale adjustment. The x-axis shows a relative number from reference image r to the ith image as  where N is the number of section images. The y-axis shows the ratio of the tissue area after non-rigid registration and the original image.
+
+We also compared the proposed method with an existing registration method for 3D reconstruction: the state-of-the-art non-rigid registration method by Wang et al. [10]. Fig. 18 shows the cross section of the results of the proposed method and existing methods using their dataset [10]. We used registered section images according to their method [44] and built the cross section of the 3D reconstruction from these sections. The 3D reconstruction results of both the existing method and proposed method were continuous, as in Fig. 18. However, the result of the proposed method is slightly worse than the existing method since the tissue was not smooth in the upper part of our method. This is one of our limitations that our method is weak for the image of a tiny piece with the fine resolution because it does not have the global structure of the organs and leads the mismatches of the keypoints. By contrast, Wang et al.’s study used a data normalization and feature extraction method that emphasized a small biological structure and thus accomplished high registration performance for this sample [10].
+
+Fig. 18
+Download : Download high-res image (189KB)Download : Download full-size image
+Fig. 18. The side section of the 3D reconstruction result using the data in Wang et al. [10]. Results for (a) Wang et al. [10] and (b) our proposed method are shown: two side views of the 3D reconstructed result using two sectioning planes are shown in each row. Note that the color in the result image of Wang et al.’s method was normalized using their algorithm [10]. The number of sections . For this sample, we set threshold  for keypoint detection in AKAZE. (For interpretation of the references to color in this figure legend, the reader is referred to the web version of this article.)
+
+Next, we compared the performance of 3D reconstruction using a large number of sections (). For Wang et al.’s method, we used the author’s implementation [44] and searched the best parameter  which is a threshold for validating the output registered image. We compared the existing method and the proposed method using a subset of Kyoto collection data [2]. Fig. 19 shows the cross section of the results. The 3D reconstruction result of the existing method is discontinuous, as shown in Fig. 19(a). Since the existing method adopts the neighboring pairwise method, the output became discontinuous once the continuous sections were lost because of registration failure. To support this assumption, their registration result was smooth for some continuous sections as shown in Fig. 19(a). By contrast, the 3D reconstruction result of the proposed method was continuous throughout entire sections as shown in Fig. 19(b). This result suggests that our registration method selected a target image without registration failure and was effective for reconstructing a smooth 3D model.
+
+Fig. 19
+Download : Download high-res image (517KB)Download : Download full-size image
+Fig. 19. The side section of the 3D reconstruction result: two side views of the 3D reconstructed result using two sectioning planes are shown in each row. Results for (a) Wang et al. [10] and (b) our proposed method are shown. Note that the color in the output image using Wang et al.’s method was normalized using their algorithm [10]. The number of sections .
+
+Finally, we present applicability of our method. The Kyoto collection contains human embryo images of many stages of development from early stage to late stage (image number N > 100 to N > 1000) [2]. Fig. 20 shows the 3D reconstruction result of various developmental stages. As a result, our 3D reconstruction result was smoothly connected. This demonstrates that our method can be used for various samples from a small to a large number of images. Our method also can be used to reconstruct a specific part of the sample. Fig. 21 shows the 3D reconstruction data of various organs from the annotation data. The annotation was performed by a medical specialist. We estimated the deformation in section images without annotation and then applied the deformation to the images with annotations. The surface of each tissue region was exported as a 3D mesh using voTracer [45] and it was visualized using the Unity3D game engine [46]. As a result, various organs were smoothly connected using our registration method.
+
+Fig. 20
+Download : Download high-res image (460KB)Download : Download full-size image
+Fig. 20. The side section of the 3D reconstruction results of the four developmental stages: two side views of the 3D reconstructed result using one sectioning plane are shown. The number of sections is  respectively.
+
+Fig. 21
+Download : Download high-res image (248KB)Download : Download full-size image
+Fig. 21. 3D reconstruction of various organs from the annotated image: From a normal and annotated image as input (left), the 3D model of various organs is shown (right). Each organ is visualized in each color: tissue surface as gray, central nervous system (CNS) as red, intestine as blue, and liver as yellow. (For interpretation of the references to colour in this figure legend, the reader is referred to the web version of this article.)
+
+6. Conclusion
+In this study, we proposed a method for the 3D reconstruction of serial section images. For non-rigid deformation in the section image, we proposed a novel feature-based non-rigid registration method that establishes the transformation field. The proposed method estimates the rigid transform in local regions and blends them to interpolate the transforms at every pixel. The experimental results demonstrated that our method could describe a complex deformation with a smaller number of control points and was robust to a variation of staining. The proposed method also automatically selects the number of control point appropriately for the given image pair. We also proposed a method to solve problems in 3D reconstruction from a large number of serial section images. To avoid tissue discontinuity caused by registration failure, we proposed a method to select the target image. We selected the target image according to the registration accuracy based on our non-rigid registration method by blending transforms. To avoid a change in the tissue area caused by the accumulation of scale changes, we proposed scale adjustment. We adjusted an area of tissue using the tissue area before and after registration. The experimental results demonstrated that our methods reduced tissue discontinuity and scale change.
+
+As a limitation of the feature-based approach, the proposed method could not perform registration in the image without a sufficient number of feature points. The use of a more robust algorithm for matching will improve registration quality. We used a tissue extraction method for non-rigid registration and the calculation of the tissue area for scale adjustment. However, in some cases, tissue extraction failed in samples with a large distortion. This failure of tissue extraction caused a failure in non-rigid registration and scale adjustment. Therefore, a more robust tissue extraction method could be adopted to improve robustness.
+
+The non-rigid registration method may have applications other than the registration of histological serial section images. The investigation of other applications of the method will be interesting for future study.
