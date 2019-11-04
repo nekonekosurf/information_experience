@@ -1,6 +1,7 @@
-#関数ファイル
+# 関数ファイル
 import glob, string
 import numpy as np
+import MeCab
 
 
 def files_to_list(filename):
@@ -60,19 +61,20 @@ def top_ten_words(top_ten_dict, top_n):
     list_values = top_ten_dict.values()
     list_values = set(list_values)
     list_values = list(list_values)
-    if len(list_values)<top_n:
+    if len(list_values) < top_n:
         return top_ten_dict
     # print(list_values)
     list_values.sort(reverse=True)
     new_dict = {}
     for i in range(top_n):
-        print('{0:^5}'.format(i+1),"　位|",end="")
+        print('{0:^5}'.format(i + 1), "　位|", end="")
         for key in top_ten_dict.keys():
             if top_ten_dict[key] == list_values[i]:
                 new_dict[key] = list_values[i]
-                print('{0:^15}|{1:^10}'.format(key,list_values[i]),"回|", end="")
+                print('{0:^15}|{1:^10}'.format(key, list_values[i]), "回|", end="")
         print("")
     return new_dict
+
 
 def word_ratio(word_list, word_norms):
     ratio_dict = {}
@@ -83,7 +85,104 @@ def word_ratio(word_list, word_norms):
             if a_word not in ratio_dict:
                 ratio_dict[a_word] = 1
             else:
-                ratio_dict[a_word] +=1
+                ratio_dict[a_word] += 1
     total_words_list = len(word_list)
-    total_words_norm =sum(ratio_dict.values())
-    return  total_words_norm/total_words_list
+    total_words_norm = sum(ratio_dict.values())
+    return total_words_norm / total_words_list
+
+
+def percent_noun(text):
+    mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
+    mecab.parse('')
+    jtext1_node = mecab.parseToNode(text)
+
+    hinshi_count = {}
+    while jtext1_node:
+        word = jtext1_node.surface
+        hinshi = jtext1_node.feature.split(",")[0]
+        if hinshi not in hinshi_count.keys():
+            hinshi_count[hinshi] = 1
+        else:
+            hinshi_count[hinshi] += 1
+        jtext1_node = jtext1_node.next
+    total_num = sum(hinshi_count.values())
+
+    print(hinshi_count)
+    print(total_num)
+    print(hinshi_count['名詞'])
+    return hinshi_count['名詞'] / total_num
+
+
+def jnoun(text):
+    mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
+    mecab.parse('')
+    jtext1_node = mecab.parseToNode(text)
+
+    noun_count_dict = {}
+    # ここから名詞の個数をカウントして辞書に追加
+    while jtext1_node:
+        word = jtext1_node.surface
+        # print(word)
+        hinshi = jtext1_node.feature.split(",")[0]
+        # print(hinshi)
+        if hinshi == '名詞':
+            # print(word)
+            if word not in noun_count_dict.keys():
+                noun_count_dict[word] = 1
+            else:
+                noun_count_dict[word] += 1
+        jtext1_node = jtext1_node.next
+    # print(noun_count_dict)
+    # ここからトップ３０をはじき出す
+    list_values = noun_count_dict.values()
+    list_values = set(list_values)
+    list_values = list(list_values)
+    list_values.sort(reverse=True)
+    print(list_values)
+
+    # new_dictに新たなトップ３０が入る辞書を作る
+    new_dict = {}
+    for i in range(30):
+        print('{0:^5}'.format(i + 1), "　位|", end="")
+        for key in noun_count_dict.keys():
+            if noun_count_dict[key] == list_values[i]:
+                new_dict[key] = list_values[i]
+                print('{0:^10}|{1:^5}'.format(key, list_values[i]), "回|", end="")
+        print("")
+
+    # 辞書をリストへ
+    # print(new_dict)
+    top_30_noun_list = []
+    for key in new_dict.keys():
+        top_30_noun_list.append(key)
+
+    return top_30_noun_list
+
+
+def percent_jword(text, words):
+    mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
+    mecab.parse('')
+    jtext1_node = mecab.parseToNode(text)
+    noun_count_dict = {}
+    # ここから名詞の個数をカウントして辞書に追加
+    while jtext1_node:
+        word = jtext1_node.surface
+        # print(word)
+        hinshi = jtext1_node.feature.split(",")[0]
+        # print(hinshi)
+        if hinshi == '名詞':
+            # print(word)
+            if word not in noun_count_dict.keys():
+                noun_count_dict[word] = 1
+            else:
+                noun_count_dict[word] += 1
+        jtext1_node = jtext1_node.next
+    # 辞書のvaluesをすべて合計したものとwordの合計値から
+    # word（top 30 ）がどれくらい使われているか計算する
+    total_words=sum(noun_count_dict.values())
+    print("単語の総数: ",total_words)
+    total_30=0
+    for noun in words:
+        total_30 += noun_count_dict[noun]
+    print("トップ３０の名詞の数: ",total_30)
+    return  total_30/total_words
