@@ -1,4 +1,4 @@
-# なぜか外部入力からだとうまくいかない
+# coding:utf-8
 # 課題５．2
 def three_letter_words(list_words):
     list=[]
@@ -8,8 +8,6 @@ def three_letter_words(list_words):
     set_list=set(list)
     print(sorted(set_list))
 
-word1=['She','sells','sea','shells','by','the','sea','shore']
-
-# word1=input("word1")
-# print(word1)
+#word1=['She','sells','sea','shells','by','the','sea','shore']
+word1= input()
 three_letter_words(word1)

@@ -1,4 +1,7 @@
+# coding:utf-8
 #課題5-1
+
+
 import  glob
 def files_to_list(filename):
     f = open(filename,'r')

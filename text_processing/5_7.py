@@ -1,6 +1,6 @@
+# coding:utf-8
 import os
 from contextlib import redirect_stdout
-
 import func
 import codecs
 

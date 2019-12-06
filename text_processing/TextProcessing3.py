@@ -1,4 +1,4 @@
-# なぜか外部入力からだとうまくいかない
+# coding:utf-8
 # 課題５．3
 def end_ten(list_words):
     list=[]
@@ -11,8 +11,11 @@ def end_ten(list_words):
 def caption_pt(list_words):
     list=[]
     for w in list_words:
-        if w.lower().find('pt') != -1:
-            list.append(w.lower())
+		if w.find('P') and w.find('T') == -1:	
+			if w.lower().find('pt') != -1:
+				list.append(w.lower())
+				
+				
     set_list=set(list)
     print(sorted(set_list))
 
@@ -31,9 +34,9 @@ def begin_upper(list_words):
     set_list=set(list)
     print(sorted(set_list))
 
-word1=['caption','option','section','written','given','English','USA','engine','iPad','Ten']
+#word1=['caption','option','Pt','section','written','given','English','USA','engine','iPad','Ten']
 
-# word1=input("word1")
+word1=input()
 end_ten(word1)
 caption_pt(word1)
 begin_upper(word1)
