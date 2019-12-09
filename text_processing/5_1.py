@@ -1,8 +1,10 @@
 # coding:utf-8
 #課題5-1
 
-
+import  nltk
 import  glob
+nltk.download('book')
+from nltk.book import *
 def files_to_list(filename):
     f = open(filename,'r')
     text = f.read()
@@ -21,18 +23,25 @@ def count_words(list_words):
     # print(set_lower_word_list)
     return  len(set_lower_word_list)
 
-list_words=files_to_list('./sampletext.txt')
-print(list_words)
+
+def import_nltk():
+	nltk.download('book')
+	from nltk.book import *
 
 
-
+#list_words=files_to_list('./sampletext.txt')
+#print(list_words)
 #ここまででテキストをリストに格納
+
 # text = input()
-number_of_words=count_words(list_words)
-print(number_of_words)
+#number_of_words=count_words(list_words)
+#print(number_of_words)
 
 
 
+import_nltk()
+for 
+counts_word
 
 for file in glob.glob("text*.txt"):
     list_words = files_to_list(file)

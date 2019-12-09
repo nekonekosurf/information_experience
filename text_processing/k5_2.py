@@ -37,6 +37,7 @@ def list_add(in1, in2):
 
 #対話型でうまくいくように関数化 名前もkつける
 def main(list_words):
+	#list_words=['The', 'organizers', 'of', 'the', 'large', 'scale', 'demonstrations', 'which', 'kicked', 'off', 'Hong', 'Kong', 's', 'months', 'long', 'protest', 'movement', 'earlier']
 	list_char_alphabet= []
 	sum_list_num_alphabet = []
 	for char in string.ascii_lowercase:	
@@ -45,7 +46,8 @@ def main(list_words):
 
 	
 	sum_list_num_alphabet= list_add(sum_list_num_alphabet,alphabet_freq(list_words))
-
+	total_chars=sum(sum_list_num_alphabet)
+	print("アルファベットの合計個数： ",total_chars)
 	print("---------------すべてのアルファベットの出現頻度  --------------")
 	ratio_list=[]
 	for n in sum_list_num_alphabet:
@@ -65,6 +67,7 @@ def main(list_words):
 if __name__ == '__main__':
 	main()
 
+	
 	
 
 

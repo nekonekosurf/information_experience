@@ -1,4 +1,6 @@
+# coding:utf-8
 # 課題5-3
+from __future__ import print_function
 import glob, string
 import numpy as np
 from collections import OrderedDict
@@ -78,7 +80,7 @@ def top_ten_words(top_ten_dict, top_n):
 
 dict = {}
 top_n_dict = {}
-top_n = 5
+top_n = 10
 for file in glob.glob("sampletext*.txt"):
     list_words = files_to_list_lower(file)
     dict = make_dict(list_words, dict)
