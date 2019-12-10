@@ -1,4 +1,6 @@
+# coding:utf-8
 # 関数ファイル
+from __future__ import print_function
 import glob, string
 import numpy as np
 import MeCab
@@ -91,8 +93,9 @@ def word_ratio(word_list, word_norms):
     return total_words_norm / total_words_list
 
 
+
 def percent_noun(text):
-    mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
+    #mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
     mecab.parse('')
     jtext1_node = mecab.parseToNode(text)
 
@@ -114,10 +117,9 @@ def percent_noun(text):
 
 
 def jnoun(text):
-    mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
+    mecab = MeCab.Tagger('-Ochasen')
     mecab.parse('')
     jtext1_node = mecab.parseToNode(text)
-
     noun_count_dict = {}
     # ここから名詞の個数をカウントして辞書に追加
     while jtext1_node:

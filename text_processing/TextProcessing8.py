@@ -4,9 +4,6 @@ from __future__ import print_function
 import glob, string
 import numpy as np
 from collections import OrderedDict
-import nltk
-nltk.download('book')
-from nltk.book import *
 
 def files_to_list(filename):
     f = open(filename, 'r')
@@ -166,8 +163,24 @@ def make_contents_low(list):
 
 def main():
     # text = [text1,text2]
+	list_words= input ()
+	#print(list_words)
+	dict = {}
+	top_n_dict = {}
+	top_n = 10
+        # print(text1)
+        # print(list_words)
+	list_words = make_contents_low(list_words)
+	dict = make_dict(list_words, dict)
+	dict_={}
+	dict_=make_dict(list_words,dict_)
+	top_ten_words(dict_,top_n)
+
+"""
     for a in text:
         list_words= a
+
+
         print(list_words)
         dict = {}
         top_n_dict = {}
@@ -179,7 +192,7 @@ def main():
         dict_={}
         dict_=make_dict(list_words,dict_)
         top_ten_words(dict_,top_n)
-
+"""
 if __name__ == '__main__':
     main()
 
@@ -195,3 +208,22 @@ for file in glob.glob("sampletext*.txt"):
     print("\n\n")
 
 """
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
