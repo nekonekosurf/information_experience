@@ -1,0 +1,128 @@
+text 1
+<Text: Moby Dick by Herman Melville 1851>
+{u'this': 1394, u'from': 1088, u'whale': 1226, u'with': 1722, u'that': 3085}
+
+text 1
+<Text: Moby Dick by Herman Melville 1851>
+{u'this': 1394, u'from': 1088, u'whale': 1226, u'with': 1722, u'that': 3085}
+
+
+
+     that      |   3085   
+     with      |   1722   
+     this      |   1394   
+     whale     |   1226   
+     from      |   1088   
+     there     |   869    
+
+
+text 2
+<Text: Sense and Sensibility by Jane Austen 1811>
+{u'elinor': 685, u'with': 992, u'which': 593, u'have': 819, u'that': 1385}
+
+
+
+     that      |   1385   
+     with      |   992    
+     have      |   819    
+    elinor     |   685    
+     which     |   593    
+     could     |   578    
+
+
+text 3
+<Text: The Book of Genesis>
+{u'thou': 284, u'said': 477, u'with': 293, u'unto': 598, u'that': 520}
+
+
+
+     unto      |   598    
+     that      |   520    
+     said      |   477    
+     with      |   293    
+     thou      |   284    
+     shall     |   259    
+
+
+text 4
+<Text: Inaugural Address Corpus>
+{u'will': 914, u'with': 958, u'which': 1006, u'have': 1011, u'that': 1793}
+
+
+
+     that      |   1793   
+     have      |   1011   
+     which     |   1006   
+     with      |   958    
+     will      |   914    
+     this      |   836    
+
+
+text 5
+<Text: Chat Corpus>
+{u'action': 347, u'what': 201, u'part': 1022, u'join': 1021, u'that': 284}
+
+
+
+     part      |   1022   
+     join      |   1021   
+    action     |   347    
+     that      |   284    
+     what      |   201    
+     here      |   185    
+
+
+text 6
+<Text: Monty Python and the Holy Grail>
+{u'launcelot': 101, u'knight': 84, u'arthur': 261, u'what': 92, u'that': 106}
+
+
+
+    arthur     |   261    
+     that      |   106    
+   launcelot   |   101    
+     what      |    92    
+    knight     |    84    
+    galahad    |    80    
+
+
+text 7
+<Text: Wall Street Journal>
+{u'from': 391, u'*t*-1': 806, u'with': 398, u'said': 628, u'that': 848}
+
+
+
+     that      |   848    
+     *t*-1     |   806    
+     said      |   628    
+     with      |   398    
+     from      |   391    
+    million    |   383    
+
+
+text 8
+<Text: Personals Corpus>
+{u'looking': 34, u'with': 46, u'male': 42, u'lady': 88, u'seeks': 72}
+
+
+
+     lady      |    88    
+     seeks     |    72    
+     with      |    46    
+     male      |    42    
+    looking    |    34    
+     slim      |    33    
+
+
+text 9
+<Text: The Man Who Was Thursday by G . K . Chesterton 1908>
+{u'said': 507, u'with': 561, u'they': 318, u'syme': 519, u'that': 871}
+
+
+
+     that      |   871    
+     with      |   561    
+     syme      |   519    
+     said      |   507    
+     they      |   318    
+     this      |   287 

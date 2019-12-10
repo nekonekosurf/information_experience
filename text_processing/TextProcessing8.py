@@ -165,10 +165,9 @@ def make_contents_low(list):
 
 
 def main():
-    for n in range(9):
-        hoge = 'text{}'.format(n+3)
-        print("hoge",hoge)
-        list_words= hoge
+    # text = [text1,text2]
+    for a in text:
+        list_words= a
         print(list_words)
         dict = {}
         top_n_dict = {}
