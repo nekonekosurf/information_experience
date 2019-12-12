@@ -95,9 +95,9 @@ def word_ratio(word_list, word_norms):
 
 
 def percent_noun(text):
-    #mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
+    mecab = MeCab.Tagger('-Ochasen')
     mecab.parse('')
-    jtext1_node = mecab.parseToNode(text)
+    jtext1_node = mecab.parseToNode(text.encode('utf-8'))
 
     hinshi_count = {}
     while jtext1_node:
@@ -113,13 +113,13 @@ def percent_noun(text):
     print(hinshi_count)
     print(total_num)
     print(hinshi_count['名詞'])
-    return hinshi_count['名詞'] / total_num
+    return hinshi_count['名詞'] / float(total_num)
 
 
 def jnoun(text):
     mecab = MeCab.Tagger('-Ochasen')
-    mecab.parse('')
-    jtext1_node = mecab.parseToNode(text)
+    mecab.parse(' ')
+    jtext1_node = mecab.parseToNode(text.encode('utf-8'))
     noun_count_dict = {}
     # ここから名詞の個数をカウントして辞書に追加
     while jtext1_node:
@@ -162,9 +162,9 @@ def jnoun(text):
 
 
 def percent_jword(text, words):
-    mecab = MeCab.Tagger('-d /usr/lib/mecab/dic/mecab-ipadic-neologd')
+    mecab = MeCab.Tagger('-Ochasen')
     mecab.parse('')
-    jtext1_node = mecab.parseToNode(text)
+    jtext1_node = mecab.parseToNode(text.encode('utf-8'))
     noun_count_dict = {}
     # ここから名詞の個数をカウントして辞書に追加
     while jtext1_node:
@@ -187,4 +187,4 @@ def percent_jword(text, words):
     for noun in words:
         total_30 += noun_count_dict[noun]
     print("トップ３０の名詞の数: ",total_30)
-    return  total_30/total_words
+    return  float(total_30)/total_words
