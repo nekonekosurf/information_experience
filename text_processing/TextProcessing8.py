@@ -208,22 +208,3 @@ for file in glob.glob("sampletext*.txt"):
     print("\n\n")
 
 """
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

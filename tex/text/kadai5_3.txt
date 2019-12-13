@@ -1,0 +1,62 @@
+text 1
+     that      |   3085
+     with      |   1722
+     this      |   1394
+     whale     |   1226
+     from      |   1088
+
+text 2
+     that      |   1385
+     with      |   992
+     have      |   819
+    elinor     |   685
+     which     |   593
+
+text 3
+     unto      |   598
+     that      |   520
+     said      |   477
+     with      |   293
+     thou      |   284
+
+text 4
+     that      |   1793
+     have      |   1011
+     which     |   1006
+     with      |   958
+     will      |   914
+
+text 5
+     part      |   1022
+     join      |   1021
+    action     |   347
+     that      |   284
+     what      |   201
+
+text 6
+    arthur     |   261
+     that      |   106
+   launcelot   |   101
+     what      |    92
+    knight     |    84
+
+text 7
+     that      |   848
+     *t*-1     |   806
+     said      |   628
+     with      |   398
+     from      |   391
+
+text 8
+     lady      |    88
+     seeks     |    72
+     with      |    46
+     male      |    42
+    looking    |    34
+
+text 9
+     that      |   871
+     with      |   561
+     syme      |   519
+     said      |   507
+     they      |   318

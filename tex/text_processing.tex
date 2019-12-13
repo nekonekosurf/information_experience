@@ -1,0 +1,64 @@
+\documentclass[a4j]{jarticle}
+\usepackage{listings,jlisting}
+\usepackage{color}
+\usepackage{moreverb}
+\usepackage{eclbkbox}
+\usepackage{framed}
+\usepackage[top=30truemm,bottom=30truemm,left=15truemm,right=15truemm]{geometry}
+\definecolor{OliveGreen}{rgb}{0.0,0.6,0.0}
+\lstset{
+  basicstyle={\ttfamily},
+  identifierstyle={\small},
+  commentstyle={\smallitshape \color[rgb]{0,0.5,0}},
+  keywordstyle={\small\bfseries},
+  ndkeywordstyle={\small},
+  stringstyle={\small\ttfamily},
+  frame={tb},
+  breaklines=true,
+  columns=[l]{fullflexible},
+  numbers=left,
+  xrightmargin=0zw,
+  xleftmargin=0zw,
+  numberstyle={\scriptsize},
+  stepnumber=1,
+  numbersep=1zw,
+  lineskip=-0.5ex,
+  linewidth=15cm
+}
+%ここまでソースコードの表示に関する設定
+\begin{document}
+
+\subsection*{5.1}
+  課題5\_1text1からtext2までの語彙数\\
+  text1: 17231\\
+  text2: 6403\\
+  text3: 2628\\
+  text4: 9201\\
+  text5: 5441\\
+  text6: 1855\\
+  text7: 11387\\
+  text8: 882\\
+  text9: 6349
+\subsection*{5.2}
+  課題5\_2 アルファベットの出現率\\
+  \fontsize{5.5pt}{0pt}\verbatimtabinput{./text/kadai5_2.txt}
+\subsection*{5.3}
+  課題5\_3 text1からtext9までの出現率上位5番目までの4文字以上の単語\\
+  \fontsize{10pt}{5pt}\verbatimtabinput{./text/kadai5_3.txt}
+\subsection*{5.4}
+  課題5\_4 text1からtext9までのストップワードの比率\\
+  \fontsize{10pt}{10pt}\verbatimtabinput{./text/kadai5_4.txt}
+\subsection*{5.5}
+  課題5\_5 wagahaiha\_nekodearu.txtに含まれる名詞の比率\\
+  形態素解析を行いすべての品詞をすべて足したものを分母とし、分子は名詞の数とした。\\
+  \fontsize{10pt}{10pt}\verbatimtabinput{./text/kadai5_5.txt}
+\subsection*{5.6}
+  課題5\_6 wagahaiha\_nekodearu.txtに含まれる出現頻度上位30位までの名詞\\
+  \fontsize{10pt}{10pt}\verbatimtabinput{./text/kadai5_6.txt}
+\subsection*{5.7}
+  課題5\_7 wagahaiha\_nekodearu.txtにtop30\_jnounが含まれる頻度\\
+  \fontsize{10pt}{10pt}\verbatimtabinput{./text/kadai5_7.txt}
+
+
+
+\end{document}
