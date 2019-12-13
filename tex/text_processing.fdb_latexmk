@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1576206453 "text_processing.dvi" "text_processing.pdf" "text_processing" 1576206455
-  "text_processing.dvi" 1576206452 8836 7aa193edcd124770f13b69407b9ecf85 "latex"
+["dvipdf"] 1576207117 "text_processing.dvi" "text_processing.pdf" "text_processing" 1576207119
+  "text_processing.dvi" 1576207117 8900 b1daa4d7cc84f71c5401287df090aca3 "latex"
   (generated)
   "text_processing.pdf"
-["latex"] 1576206448 "text_processing.tex" "text_processing.dvi" "text_processing" 1576206455
+["latex"] 1576207115 "text_processing.tex" "text_processing.dvi" "text_processing" 1576207119
   "e:/w32tex/share/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "e:/w32tex/share/texmf-dist/fonts/tfm/ptex-fonts/standard/min10.tfm" 1519818042 1196 1be730212205a270378fba11a44765dc ""
   "e:/w32tex/share/texmf-dist/fonts/tfm/ptex-fonts/standard/tmin10.tfm" 1519818042 856 39c171483fe1bb7d0e1368980c0c205b ""
@@ -39,9 +39,9 @@
   "text/kadai5_5.txt" 1576206444 52 98c3eefde708627cedca6e427439058c ""
   "text/kadai5_6.txt" 1576206435 1157 0ca0f5af3602c39495634a90f3f6b231 ""
   "text/kadai5_7.txt" 1576206429 150 8698b4928bc97f792c9a0de9621852bf ""
-  "text_processing.aux" 1576206452 8 a94a2480d3289e625eea47cd1b285758 "latex"
-  "text_processing.tex" 1576204907 2121 404bfe5264c411a28b2d13c8a4ed2418 ""
+  "text_processing.aux" 1576207117 8 a94a2480d3289e625eea47cd1b285758 "latex"
+  "text_processing.tex" 1576207108 2165 7b498938ba35ba51208f3b45e00aedf5 ""
   (generated)
   "text_processing.dvi"
-  "text_processing.aux"
   "text_processing.log"
+  "text_processing.aux"
