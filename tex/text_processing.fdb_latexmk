@@ -1,9 +1,9 @@
 # Fdb version 3
-["dvipdf"] 1576204912 "text_processing.dvi" "text_processing.pdf" "text_processing" 1576204913
-  "text_processing.dvi" 1576204911 9436 037733562382953384bf01b33c3635cb "latex"
+["dvipdf"] 1576206453 "text_processing.dvi" "text_processing.pdf" "text_processing" 1576206455
+  "text_processing.dvi" 1576206452 8836 7aa193edcd124770f13b69407b9ecf85 "latex"
   (generated)
   "text_processing.pdf"
-["latex"] 1576204909 "text_processing.tex" "text_processing.dvi" "text_processing" 1576204913
+["latex"] 1576206448 "text_processing.tex" "text_processing.dvi" "text_processing" 1576206455
   "e:/w32tex/share/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "e:/w32tex/share/texmf-dist/fonts/tfm/ptex-fonts/standard/min10.tfm" 1519818042 1196 1be730212205a270378fba11a44765dc ""
   "e:/w32tex/share/texmf-dist/fonts/tfm/ptex-fonts/standard/tmin10.tfm" 1519818042 856 39c171483fe1bb7d0e1368980c0c205b ""
@@ -35,13 +35,13 @@
   "e:/w32tex/share/texmf-dist/web2c/texmf.cnf" 1569228113 36614 36bcba4138d21dc48ee03f08b1e2dd36 ""
   "text/kadai5_2.txt" 1576204364 3398 21e4c5ffdcf8173405f0ab0015eac92f ""
   "text/kadai5_3.txt" 1576202835 1179 072c7c731b0a4bff232885fac3641e3c ""
-  "text/kadai5_4.txt" 1576203120 289 757f51fbc1b2fb7a77d5fec81634faa1 ""
-  "text/kadai5_5.txt" 1576203255 153 e21e7efe5aef347bdd97ad90aee27b35 ""
-  "text/kadai5_6.txt" 1576203502 1185 75bef66888fe472f84b28f4ad0687e86 ""
-  "text/kadai5_7.txt" 1576204182 358 09e7f87275dee4b8141def37c8f4cfbd ""
-  "text_processing.aux" 1576204911 8 a94a2480d3289e625eea47cd1b285758 "latex"
+  "text/kadai5_4.txt" 1576206441 289 757f51fbc1b2fb7a77d5fec81634faa1 ""
+  "text/kadai5_5.txt" 1576206444 52 98c3eefde708627cedca6e427439058c ""
+  "text/kadai5_6.txt" 1576206435 1157 0ca0f5af3602c39495634a90f3f6b231 ""
+  "text/kadai5_7.txt" 1576206429 150 8698b4928bc97f792c9a0de9621852bf ""
+  "text_processing.aux" 1576206452 8 a94a2480d3289e625eea47cd1b285758 "latex"
   "text_processing.tex" 1576204907 2121 404bfe5264c411a28b2d13c8a4ed2418 ""
   (generated)
+  "text_processing.dvi"
   "text_processing.aux"
   "text_processing.log"
-  "text_processing.dvi"
