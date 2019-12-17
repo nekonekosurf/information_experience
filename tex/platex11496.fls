@@ -1,0 +1,4 @@
+PWD E:/user/virtual-neko/Document/information_science_and_engineering_experiment_2/text_processing/tex
+INPUT e:/w32tex/share/texmf-dist/web2c/texmf.cnf
+INPUT e:/w32tex/share/texmf-dist/web2c/eptex/platex.fmt
+INPUT text_processing.tex
